@@ -22,7 +22,7 @@ public class StringSchemaTest {
         assertTrue(stringSchema.isValid(""));
     }
     @Test
-    public void testRequired() {
+    public void testRequiredPositive() {
         stringSchema.required();
         assertTrue(stringSchema.isValid("Hello"));
     }
@@ -31,18 +31,18 @@ public class StringSchemaTest {
         stringSchema.required();
         assertFalse(stringSchema.isValid(null));
         assertFalse(stringSchema.isValid(""));
-        //assertFalse(stringSchema.isValid("hello"));
     }
     @Test
-    public void testMinLenght(String value)
-    {
+    public void testMinLength() {
         stringSchema.minLength(5);
-        assertTrue(stringSchema.isValid(value));
+        assertTrue(stringSchema.isValid("Hello"));
+        assertTrue(stringSchema.isValid("Welcome"));
     }
     @Test
-    public void testMinLengthNegative(String value) {
-        stringSchema.min(7);
-        assertFalse(stringSchema.isValid(value));
+    public void testMinLengthNegative() {
+        stringSchema.minLength(7);
+        assertFalse(stringSchema.isValid("Hello"));
+        assertFalse(stringSchema.isValid("Java"));
     }
     @Test
     public void testContains() {
