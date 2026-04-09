@@ -14,8 +14,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
         });
         return this;
     }
-    public NumberSchema range(int start, int end)
-    {
+    public NumberSchema range(int start, int end) {
         addCheck("range", value -> {
             if (value == null) return !isRequired;
             return value >= start && value <= end;
