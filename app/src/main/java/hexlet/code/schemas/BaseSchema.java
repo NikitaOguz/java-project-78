@@ -17,14 +17,14 @@ public abstract class BaseSchema<T> {
             return false;
         }
         for (Map.Entry<String, Predicate<T>> valid : check.entrySet()) {
-            if(!valid.getValue().test(data)) {
+            if (!valid.getValue().test(data)) {
                 return false;
             }
 
         }
         return true;
     }
-    protected final void addCheck(String toAddName, Predicate<T> toAdd){
+    protected final void addCheck(String toAddName, Predicate<T> toAdd) {
         check.put(toAddName, toAdd);
     }
 }
