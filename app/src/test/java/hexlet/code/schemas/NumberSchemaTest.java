@@ -1,5 +1,11 @@
 package hexlet.code.schemas;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class NumberSchemaTest {
     private NumberSchema numberSchema;
     @BeforeEach
@@ -39,7 +45,8 @@ public class NumberSchemaTest {
         assertTrue(numberSchema.isValid(4));
         assertTrue(numberSchema.isValid(6));
     }
-    @Test public void testRangeNegative() {
+    @Test
+    public void testRangeNegative() {
         numberSchema.range(4,8);
         assertFalse(numberSchema.isValid(1));
         assertFalse(numberSchema.isValid(9));
