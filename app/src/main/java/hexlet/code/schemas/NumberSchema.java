@@ -1,10 +1,12 @@
 package hexlet.code.schemas;
 
 public final class NumberSchema extends BaseSchema<Integer> {
+
     public NumberSchema required() {
         setRequired();
         return this;
     }
+
     public NumberSchema positive() {
         addCheck("positive", value -> {
             if (value == null) {
@@ -14,6 +16,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
         });
         return this;
     }
+
     public NumberSchema range(int start, int end) {
         addCheck("range", value -> {
             if (value == null) {
