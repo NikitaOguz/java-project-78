@@ -9,7 +9,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.50.0"
     id("com.gradleup.shadow") version "9.2.2"
     // Плагин для публикации отчета о покрытии тестами на SonarQube
-    id("org.sonarqube") version "6.0.1.5171"
+    id "org.sonarqube" version "7.2.3.7755"
 }
 
 group = "hexlet.code"
@@ -44,16 +44,10 @@ tasks.test {
 
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
 
-sonarqube {
+sonar {
     properties {
-        property("sonar.projectKey", "NikitaOguz_java-project-71")
-        property("sonar.organization", "nikitoguzkov")
-        property("sonar.host.url", "https://sonarcloud.io")
-
-        property(
-            "sonar.coverage.jacoco.xmlReportPaths",
-            "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
-        )
+        property "sonar.projectKey", "NikitaOguz_java-project-78"
+        property "sonar.organization", "nikitoguzkov"
     }
 }
 tasks.register("install") {
