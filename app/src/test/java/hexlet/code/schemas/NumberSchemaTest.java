@@ -47,7 +47,7 @@ public class NumberSchemaTest {
     }
     @Test
     public void testRangeNegative() {
-        numberSchema.range(4,8);
+        numberSchema.range(4, 8);
         assertFalse(numberSchema.isValid(1));
         assertFalse(numberSchema.isValid(9));
     }
