@@ -1,13 +1,23 @@
 package hexlet.code.schemas;
 
-public class MapSchemaTest {
-    private MapSchema mapSchema;
+import hexlet.code.Validator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public final class MapSchemaTest {
+    private MapSchema<String> mapSchema;
 
     private Map<String, String> data;
 
     @BeforeEach
     public void setUp() {
-        mapSchema = new MapSchema();
+        mapSchema = new MapSchema<>();
         data = new HashMap<>();
         data.put("key", "value");
     }
@@ -40,7 +50,7 @@ public class MapSchemaTest {
     @Test
     public void testShape() {
         Validator v = new Validator();
-        MapSchema schema = v.map();
+        MapSchema<String> schema = v.map();
 
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
         schemas.put("firstName", v.string().required());
@@ -58,7 +68,7 @@ public class MapSchemaTest {
     @Test
     public void testShapeNegative() {
         Validator v = new Validator();
-        MapSchema schema = v.map();
+        MapSchema<String> schema = v.map();
 
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
         schemas.put("firstName", v.string().required());
@@ -75,7 +85,7 @@ public class MapSchemaTest {
     @Test
     public void testShapeNull() {
         Validator v = new Validator();
-        MapSchema schema = v.map();
+        MapSchema<String> schema = v.map();
 
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
         schemas.put("firstName", v.string().required());

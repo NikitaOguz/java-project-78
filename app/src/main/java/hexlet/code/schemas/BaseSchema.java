@@ -1,5 +1,9 @@
 package hexlet.code.schemas;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+
 public abstract class BaseSchema<T> {
     protected Map<String, Predicate<T>> check = new LinkedHashMap<>();
     protected boolean isRequired;
@@ -23,5 +27,4 @@ public abstract class BaseSchema<T> {
     protected final void addCheck(String toAddName, Predicate<T> toAdd){
         check.put(toAddName, toAdd);
     }
-}
 }
