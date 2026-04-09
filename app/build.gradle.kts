@@ -9,7 +9,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.50.0"
     id("com.gradleup.shadow") version "9.2.2"
     // Плагин для публикации отчета о покрытии тестами на SonarQube
-    id "org.sonarqube" version "7.2.3.7755"
+    id("org.sonarqube") version "7.2.3.7755"
 }
 
 group = "hexlet.code"
