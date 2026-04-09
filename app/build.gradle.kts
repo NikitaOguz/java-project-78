@@ -46,8 +46,8 @@ tasks.jacocoTestReport { reports { xml.required.set(true) } }
 
 sonar {
     properties {
-        property "sonar.projectKey", "NikitaOguz_java-project-78"
-        property "sonar.organization", "nikitoguzkov"
+        property ("sonar.projectKey", "NikitaOguz_java-project-78")
+        property ("sonar.organization", "nikitoguzkov")
     }
 }
 tasks.register("install") {
