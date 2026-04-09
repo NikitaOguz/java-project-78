@@ -13,10 +13,10 @@ public abstract class BaseSchema<T> {
         isRequired = true;
     }
     public final boolean isValid(T data) {
-        if(data == null) {
+        if (data == null) {
             return false;
         }
-        for(Map.Entry<String, Predicate<T>> valid : check.entrySet()) {
+        for (Map.Entry<String, Predicate<T>> valid : check.entrySet()) {
             if(!valid.getValue().test(data)) {
                 return false;
             }

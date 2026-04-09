@@ -7,7 +7,9 @@ public final class StringSchema extends BaseSchema<String> {
     }
     public StringSchema minLength(int min) {
         addCheck("minLength", value -> {
-            if (value == null) return !isRequired;
+            if (value == null) {
+                return !isRequired;
+            }
             return value.length() >= min;
         });
         return this;
