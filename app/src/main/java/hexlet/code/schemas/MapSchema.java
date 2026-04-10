@@ -2,7 +2,7 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public final class MapSchema<T> extends BaseSchema<Map<String, T>> {
+public final class MapSchema<T> extends BaseSchema<Map<String, ?>> {
 
     @Override
     public MapSchema<T> required() {
@@ -15,19 +15,24 @@ public final class MapSchema<T> extends BaseSchema<Map<String, T>> {
         return this;
     }
 
-    public MapSchema<T> shape(Map<String, BaseSchema<T>> shapeMap) {
+    public MapSchema<T> shape(Map<String, ? extends BaseSchema<?>> shapeMap) {
         addCheck("shape", value -> {
             for (var entry : shapeMap.entrySet()) {
                 String key = entry.getKey();
-                BaseSchema<T> schema = entry.getValue();
-                T fieldValue = value.get(key);
+                BaseSchema<?> schema = entry.getValue();
+                Object fieldValue = value.get(key);
 
-                if (!schema.isValid(fieldValue)) {
+                if (!checkBySchema(schema, fieldValue)) {
                     return false;
                 }
             }
             return true;
         });
         return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    private boolean checkBySchema(BaseSchema<?> schema, Object value) {
+        return ((BaseSchema<Object>) schema).isValid(value);
     }
 }
