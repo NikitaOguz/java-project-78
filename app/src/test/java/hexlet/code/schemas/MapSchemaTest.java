@@ -12,15 +12,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MapSchemaTest {
     private MapSchema<String> mapSchema;
-
     private Map<String, String> data;
 
     @BeforeEach
     public void setUp() {
-        mapSchema = new MapSchema<>();
+        Validator v = new Validator();
+        mapSchema = v.map();
         data = new HashMap<>();
         data.put("key", "value");
     }
+
+    @Test
+    public void testValidatorMap() {
+        Validator v = new Validator();
+        MapSchema<String> schema = v.map();
+
+        Map<String, String> actual = new HashMap<>();
+        actual.put("name", "John");
+
+        assertTrue(schema.isValid(actual));
+    }
+
     @Test
     public void testRequiredNull() {
         assertTrue(mapSchema.isValid(null));
@@ -31,22 +43,26 @@ public final class MapSchemaTest {
         mapSchema.required();
         assertTrue(mapSchema.isValid(data));
     }
+
     @Test
     public void testRequiredNegative() {
         mapSchema.required();
         assertFalse(mapSchema.isValid(null));
     }
+
     @Test
     public void testSizeOf() {
         mapSchema.sizeof(2);
         data.put("key2", "value2");
         assertTrue(mapSchema.isValid(data));
     }
+
     @Test
     public void testSizeOfNegative() {
         mapSchema.sizeof(2);
         assertFalse(mapSchema.isValid(data));
     }
+
     @Test
     public void testShape() {
         Validator v = new Validator();
@@ -63,8 +79,8 @@ public final class MapSchemaTest {
         human.put("lastName", "Smith");
 
         assertTrue(schema.isValid(human));
-
     }
+
     @Test
     public void testShapeNegative() {
         Validator v = new Validator();
@@ -82,6 +98,7 @@ public final class MapSchemaTest {
 
         assertFalse(schema.isValid(human));
     }
+
     @Test
     public void testShapeNull() {
         Validator v = new Validator();
@@ -98,3 +115,4 @@ public final class MapSchemaTest {
         assertFalse(schema.isValid(human));
     }
 }
+
