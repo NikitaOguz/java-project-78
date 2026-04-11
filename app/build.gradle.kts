@@ -35,6 +35,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
@@ -43,8 +45,10 @@ tasks.test {
 }
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test)
     reports {
         xml.required.set(true)
+        html.required.set(true)
     }
 }
 
@@ -52,6 +56,10 @@ sonar {
     properties {
         property("sonar.projectKey", "NikitaOguz_java-project-78")
         property("sonar.organization", "nikitoguzkov")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${layout.buildDirectory.get().asFile}/reports/jacoco/test/jacocoTestReport.xml"
+        )
     }
 }
 

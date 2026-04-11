@@ -26,11 +26,7 @@ public final class MapSchemaTest {
     public void testValidatorMap() {
         Validator v = new Validator();
         MapSchema<String> schema = v.map();
-
-        Map<String, String> actual = new HashMap<>();
-        actual.put("name", "John");
-
-        assertTrue(schema.isValid(actual));
+        assertTrue(schema.isValid(new HashMap<>()));
     }
 
     @Test
