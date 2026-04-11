@@ -11,21 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MapSchemaTest {
+    private Validator validator;
     private MapSchema<String> mapSchema;
     private Map<String, String> data;
 
     @BeforeEach
     public void setUp() {
-        Validator v = new Validator();
-        mapSchema = v.map();
+        validator = new Validator();
+        mapSchema = validator.map();
         data = new HashMap<>();
         data.put("key", "value");
     }
 
     @Test
     public void testValidatorMap() {
-        Validator v = new Validator();
-        MapSchema<String> schema = v.map();
+        MapSchema<String> schema = validator.map();
         assertTrue(schema.isValid(new HashMap<>()));
     }
 
@@ -60,55 +60,93 @@ public final class MapSchemaTest {
     }
 
     @Test
+    public void testSizeOfNullWithoutRequired() {
+        mapSchema.sizeof(2);
+        assertTrue(mapSchema.isValid(null));
+    }
+
+    @Test
+    public void testSizeOfNullWithRequired() {
+        mapSchema.required();
+        mapSchema.sizeof(2);
+        assertFalse(mapSchema.isValid(null));
+    }
+
+    @Test
     public void testShape() {
-        Validator v = new Validator();
-        MapSchema<String> schema = v.map();
-
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
-        schemas.put("firstName", v.string().required());
-        schemas.put("lastName", v.string().required().minLength(2));
+        schemas.put("firstName", validator.string().required());
+        schemas.put("lastName", validator.string().required().minLength(2));
 
-        schema.shape(schemas);
+        mapSchema.shape(schemas);
 
         Map<String, String> human = new HashMap<>();
         human.put("firstName", "John");
         human.put("lastName", "Smith");
 
-        assertTrue(schema.isValid(human));
+        assertTrue(mapSchema.isValid(human));
     }
 
     @Test
     public void testShapeNegative() {
-        Validator v = new Validator();
-        MapSchema<String> schema = v.map();
-
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
-        schemas.put("firstName", v.string().required());
-        schemas.put("lastName", v.string().required().minLength(2));
+        schemas.put("firstName", validator.string().required());
+        schemas.put("lastName", validator.string().required().minLength(2));
 
-        schema.shape(schemas);
+        mapSchema.shape(schemas);
 
         Map<String, String> human = new HashMap<>();
         human.put("firstName", "John");
         human.put("lastName", "B");
 
-        assertFalse(schema.isValid(human));
+        assertFalse(mapSchema.isValid(human));
     }
 
     @Test
-    public void testShapeNull() {
-        Validator v = new Validator();
-        MapSchema<String> schema = v.map();
-
+    public void testShapeNullField() {
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
-        schemas.put("firstName", v.string().required());
+        schemas.put("firstName", validator.string().required());
 
-        schema.shape(schemas);
+        mapSchema.shape(schemas);
 
         Map<String, String> human = new HashMap<>();
         human.put("firstName", null);
 
-        assertFalse(schema.isValid(human));
+        assertFalse(mapSchema.isValid(human));
+    }
+
+    @Test
+    public void testShapeMissingKey() {
+        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        schemas.put("firstName", validator.string().required());
+
+        mapSchema.shape(schemas);
+
+        Map<String, String> human = new HashMap<>();
+
+        assertFalse(mapSchema.isValid(human));
+    }
+
+    @Test
+    public void testShapeNullWithoutRequired() {
+        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        schemas.put("firstName", validator.string().required());
+
+        mapSchema.shape(schemas);
+
+        assertTrue(mapSchema.isValid(null));
+    }
+
+    @Test
+    public void testShapeNullWithRequired() {
+        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        schemas.put("firstName", validator.string().required());
+
+        mapSchema.required();
+        mapSchema.shape(schemas);
+
+        assertFalse(mapSchema.isValid(null));
     }
 }
+
 
