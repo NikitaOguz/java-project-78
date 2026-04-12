@@ -147,6 +147,39 @@ public final class MapSchemaTest {
 
         assertFalse(mapSchema.isValid(null));
     }
+
+    @Test
+    public void testShapeWithNumberSchema() {
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
+        schemas.put("name", validator.string().required());
+        schemas.put("age", validator.number().required().positive());
+
+        MapSchema<Object> schema = validator.map();
+        schema.shape(schemas);
+
+        Map<String, Object> human = new HashMap<>();
+        human.put("name", "John");
+        human.put("age", 20);
+
+        assertTrue(schema.isValid(human));
+    }
+
+    @Test
+    public void testShapeWithInvalidNumberSchema() {
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
+        schemas.put("name", validator.string().required());
+        schemas.put("age", validator.number().required().positive());
+
+        MapSchema<Object> schema = validator.map();
+        schema.shape(schemas);
+
+        Map<String, Object> human = new HashMap<>();
+        human.put("name", "John");
+        human.put("age", -5);
+
+        assertFalse(schema.isValid(human));
+    }
 }
+
 
 
