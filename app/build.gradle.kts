@@ -2,7 +2,6 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    application
     jacoco
     id("checkstyle")
     id("io.freefair.lombok") version "8.6"
