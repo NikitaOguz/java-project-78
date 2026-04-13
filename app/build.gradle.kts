@@ -2,20 +2,14 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-application
     jacoco
+    id("java")
     id("checkstyle")
-    id("io.freefair.lombok") version "8.6"
-    id("com.github.ben-manes.versions") version "0.50.0"
     id("org.sonarqube") version "7.2.3.7755"
 }
 
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
-
-application {
-    mainClass.set("hexlet.code.App")
-}
 
 repositories {
     mavenCentral()
