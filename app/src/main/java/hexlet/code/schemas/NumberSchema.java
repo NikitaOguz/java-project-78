@@ -7,13 +7,19 @@ public final class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
-    public NumberSchema positive() {
-        addCheck("positive", value -> value == null || value > 0);
+   public NumberSchema positive() {
+        addCheck(
+                "positive",
+                value -> value > 0
+        );
         return this;
     }
 
-    public NumberSchema range(int start, int end) {
-        addCheck("range", value -> value == null || (value >= start && value <= end));
+    public NumberSchema range(int min, int max) {
+        addCheck(
+                "range",
+                value -> value >= min && value <= max
+        );
         return this;
     }
 }
