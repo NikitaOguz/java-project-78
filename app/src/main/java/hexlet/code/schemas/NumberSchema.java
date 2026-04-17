@@ -7,7 +7,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
-   public NumberSchema positive() {
+    public NumberSchema positive() {
         addCheck(
                 "positive",
                 value -> value > 0
